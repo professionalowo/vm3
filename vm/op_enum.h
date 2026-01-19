@@ -1,5 +1,10 @@
 typedef struct exec exec_t;
-void op_mymul(exec_t *);
+void op_swap(exec_t *);
+void op_rot(exec_t *);
+void op_power(exec_t *);
+void op_romanint(exec_t *);
+void op_printroman(exec_t *);
+void op_concat(exec_t *);
 void op_add(exec_t *);
 void op_typeof(exec_t *);
 void op_sub(exec_t *);
@@ -52,7 +57,12 @@ void op_jumprel(exec_t *);
 void op_noop(exec_t *);
 enum opcodes {
   INVALID,
-  MYMUL,
+  SWAP,
+  ROT,
+  POWER,
+  ROMANINT,
+  PRINTROMAN,
+  CONCAT,
   ADD,
   TYPEOF,
   SUB,
