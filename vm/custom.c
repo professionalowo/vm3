@@ -137,6 +137,7 @@ val_t *to_string(val_t *val) {
   } else if (val->type == T_NUM && val->u.num > 0) {
     char *repr = integer_to_roman_alloc(val->u.num);
     val_t *str = v_str_new_cstr(repr);
+    free(repr);
     return str;
   } else if (val->type == T_NUM && val->u.num == 0) {
     return v_str_new_cstr("nil");
