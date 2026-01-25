@@ -153,8 +153,9 @@ OPCODE(concat) {
 
   size_t len = first->len + second->len;
   char *buf = calloc(len, sizeof(char));
-  strcpy(buf, first->buf);
-  strcat(buf, second->buf);
+
+  memcpy(buf, first->buf, first->len);
+  memcpy(buf + first->len, second->buf, second->len);
 
   val_t *conc = v_str_new_buf(buf, len);
 
