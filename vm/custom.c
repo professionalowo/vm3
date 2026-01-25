@@ -67,9 +67,9 @@ OPCODE(printroman) {
   val_t *a = POP;
   val_t *s;
   if (a->type == T_NUM && a->u.num > 0) {
-    char buffer[100];
-    integer_to_roman(a->u.num, buffer);
-    s = v_str_new_cstr(buffer);
+    char *repr = integer_to_roman_alloc(a->u.num);
+    s = v_str_new_cstr(repr);
+    free(repr);
   } else if (a->type == T_NUM && a->u.num == 0) {
     s = v_str_new_cstr("nil");
   } else {
@@ -135,9 +135,9 @@ val_t *to_string(val_t *val) {
   if (val->type == T_STR) {
     return val;
   } else if (val->type == T_NUM && val->u.num > 0) {
-    char buffer[100];
-    integer_to_roman(val->u.num, buffer);
-    return v_str_new_cstr(buffer);
+    char *repr = integer_to_roman_alloc(val->u.num);
+    val_t *str = v_str_new_cstr(repr);
+    return str;
   } else if (val->type == T_NUM && val->u.num == 0) {
     return v_str_new_cstr("nil");
   } else {
