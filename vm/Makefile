@@ -1,6 +1,7 @@
 CC=gcc
 CFLAGS=-O2 -ggdb -Wall -I. -Werror --std=gnu11
 
+GEN_HEADERS=op_enum.h op_str.h op_switch.h nativefuns.h
 OBJ=prog.o custom.o stack.o vstack.o val/str.o val/num.o val/arr.o val/real.o val/val.o val/map.o vars.o
 LIBS=
 
@@ -15,12 +16,12 @@ main: main.o libvm3.a
 libvm3.a: $(OBJ) op_enum.h op_switch.h op_str.h
 	ar -rc libvm3.a $(OBJ)
 
-prog.o: includes
+$(OBJ) vm.o main.o: $(GEN_HEADERS)
 
-includes:
+$(GEN_HEADERS) &: $(wildcard *.c) mkincludes.sh
 	./mkincludes.sh
 
 clean:
 	rm -f $(OBJ) vm main vm.o libvm3.a main.o
 
-.PHONY: includes
+.PHONY: all clean
