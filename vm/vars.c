@@ -66,10 +66,7 @@ void var_enter_block(void) { var_add_local(NULL); }
 
 void var_leave_block(void) {
   for (int i = varalloc.nrlocals - 1; i >= 0; i--) {
-    if (varalloc.locals[i].id) {
-      // TODO: verify this is a real fix
-      free(varalloc.locals[i].id);
-    }
+    free(varalloc.locals[i].id);
 
     if (varalloc.locals[i].nr == VAR_BLOCKBORDER) {
       varalloc.nrlocals = i;
