@@ -6,7 +6,7 @@
 
 static struct varalloc varalloc;
 
-struct var *_var_lookup(char *id, struct var *list, int len, int block) {
+static struct var *_var_lookup(char *id, struct var *list, int len, int block) {
   for (int i = len - 1; i >= 0; i--) {
     if (strcmp(list[i].id, id) == 0)
       return &list[i];
@@ -17,7 +17,7 @@ struct var *_var_lookup(char *id, struct var *list, int len, int block) {
   return NULL;
 }
 
-struct var *_var_add(char *id, struct var **list, int *len, int global) {
+static struct var *_var_add(char *id, struct var **list, int *len, int global) {
   if (id && _var_lookup(id, *list, *len, 1))
     return NULL;
 
@@ -62,7 +62,7 @@ struct var *var_get(char *id) {
   return ret;
 }
 
-static inline void _var_list_cleanup(struct var *list, int *len) {
+static void _var_list_cleanup(struct var *list, int *len) {
   if (!list)
     return;
 
