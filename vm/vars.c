@@ -62,6 +62,16 @@ struct var *var_get(char *id) {
   return ret;
 }
 
+static inline void _var_list_cleanup(struct var *list, int *len) {
+  if (!list)
+    return;
+
+  for (int i = 0; i < *len; i++) {
+    free(list[i].id);
+  }
+  *len = 0;
+}
+
 void var_enter_block(void) { var_add_local(NULL); }
 
 void var_leave_block(void) {
@@ -75,9 +85,9 @@ void var_leave_block(void) {
   }
 }
 
-void var_reset(void) { varalloc.nrlocals = 0; }
+void var_reset(void) { _var_list_cleanup(varalloc.locals, &varalloc.nrlocals); }
 
 void var_reset_all(void) {
-  varalloc.nrlocals = 0;
-  varalloc.nrglobals = 0;
+  _var_list_cleanup(varalloc.locals, &varalloc.nrlocals);
+  _var_list_cleanup(varalloc.globals, &varalloc.nrglobals);
 }
